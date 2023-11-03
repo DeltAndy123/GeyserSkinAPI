@@ -2,9 +2,14 @@ import express from "express"
 import config from "./config.json"
 import axios from "axios"
 
+const geyserSkinAPI = process.env.GEYSER_SKIN_API || config.geyserSkinAPI
+const headImageAPI = process.env.HEAD_IMAGE_API || config.headImageAPI
+
+const port = process.env.PORT || 3000
+
 const app = express()
 
-app.get("/version", (request, response) => {
+app.get("/version", (_request, response) => {
   response.send("1.0.0")
 })
 
@@ -21,20 +26,20 @@ app.get("/head.png", async (request, response) => {
   if (uuid.startsWith("00000000-0000-0000-")) {
     // Geyser UUID
     const xuid = parseInt(match[1].replace("-", ""), 16)
-    const req = await axios.get<GeyserAPIResponse>(config.geyserSkinAPI.replace("{XUID}", xuid.toString()))
+    const req = await axios.get<GeyserAPIResponse>(geyserSkinAPI.replace("{XUID}", xuid.toString()))
     if (req.status !== 200) {
       console.error(req.data)
       return response.status(500).json({
-        error: "Failed to get skin from GeyserSkinAPI"
+        error: "Failed to get skin from Geyer's API"
       })
     }
     id = req.data.texture_id
   } else {
     id = uuid
   }
-  response.redirect(config.headImageAPI.replace("{ID}", id))
+  response.redirect(headImageAPI.replace("{ID}", id))
 })
 
-app.listen(3000, () => {
-  console.log("Server started at port 3000")
+app.listen(port, () => {
+  console.log(`Server started at port ${port}`)
 })
