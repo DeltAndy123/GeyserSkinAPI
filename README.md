@@ -1,7 +1,6 @@
 # GeyserSkinAPI
 
-"""
-API for Minecraft skins that work with Geyser and Java accounts.
+An API for Minecraft skins that work with Geyser and Java accounts.
 
 This API provides a way to get the skin of a Minecraft player, which can be used to display the player's skin in a game or on a website.
 
