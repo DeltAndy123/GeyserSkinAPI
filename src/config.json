@@ -1,0 +1,4 @@
+{
+  "geyserSkinAPI": "https://api.geysermc.org/v2/skin/{XUID}",
+  "headImageAPI": "https://mc-heads.net/avatar/{ID}.png"
+}
